@@ -49,7 +49,10 @@
 (defconstant VK_IMAGE_LAYOUT_UNDEFINED 0)
 (defconstant VK_SUBPASS_EXTERNAL 0)
 
+(defconstant VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR 1)
+
 (defparameter VK_KHR_SURFACE_EXTENSION_NAME "VK_KHR_surface")
+(defparameter VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME "VK_KHR_portability_enumeration")
 (defparameter VK_KHR_SWAPCHAIN_EXTENSION_NAME "VK_KHR_swapchain")
 (defparameter VK_KHR_DISPLAY_EXTENSION_NAME "VK_KHR_display")
 (defparameter VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME "VK_KHR_display_swapchain")

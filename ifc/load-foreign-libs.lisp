@@ -28,11 +28,11 @@
   (namestring (asdf/system:system-relative-pathname :cl-vulkan "")))
 
 #+darwin
-(let ((vulkan-sdk-path (concatenate 'string *home-dir* "/vulkansdk-macos-1.1.130.0/macOS")))
+(let ((vulkan-sdk-path (concatenate 'string *home-dir* "VulkanSDK/1.3.231.1/macOS")))
   
   (sb-posix:setenv "VULKAN_SDK" vulkan-sdk-path 0)
-  (sb-posix:setenv "VK_ICD_FILENAMES" (concatenate 'string vulkan-sdk-path "/etc/vulkan/icd.d/MoltenVK_icd.json") 0)
-  (sb-posix:setenv "VK_LAYER_PATH" (concatenate 'string vulkan-sdk-path "/etc/vulkan/explicit_layer.d") 0)
+  (sb-posix:setenv "VK_ICD_FILENAMES" (concatenate 'string vulkan-sdk-path "/share/vulkan/icd.d/MoltenVK_icd.json") 0)
+  (sb-posix:setenv "VK_LAYER_PATH" (concatenate 'string vulkan-sdk-path "/share/vulkan/explicit_layer.d") 0)
   (sb-posix:setenv "DYLD_LIBRARY_PATH" (concatenate 'string vulkan-sdk-path "/lib") 0)
   (sb-posix:setenv "VULKAN_FRAMEWORK_PATH" (concatenate 'string vulkan-sdk-path "/Frameworks") 0)
   (sb-posix:setenv "DYLD_FRAMEWORK_PATH" (concatenate 'string vulkan-sdk-path "/Frameworks") 0))
@@ -42,7 +42,7 @@
 		 (concatenate 'string *home-dir* "/swiftshader-build1/Linux/vk_swiftshader_icd.json") 0)
 
 (cffi:define-foreign-library glfw3
-  (:darwin "libglfw.3.4.dylib")
+  (:darwin "libglfw.3.3.dylib")
   (:windows "glfw3.dll")
   (:linux "libglfw.so.3"))
 

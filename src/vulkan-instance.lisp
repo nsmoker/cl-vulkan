@@ -90,13 +90,19 @@
 	       (find "VK_LAYER_LUNARG_api_dump" available-layers :test #'string=))
       (pushnew "VK_LAYER_LUNARG_api_dump" layer-names :test #'string=))
     
+    ;; Need this on recent versions of the SDK for MoltenVK to work.
+    ;; https://www.lunarg.com/wp-content/uploads/2022/04/Portability-Enumeration-Extension-APR2022.pdf
+    #+darwin
+    	(pushnew VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME extension-names :test #'string=)
+        
     (loop for layer in layer-names
        unless (find layer available-layers :test #'string=)
        do (error "layer ~S is not available" layer))
     
-    (loop for ext in extension-names
-       unless (find ext available-extensions :test #'string=)
-       do (error "extension ~S is not available" ext)))	    
+   ;; (loop for ext in extension-names
+     ;;  unless (find ext available-extensions :test #'string=)
+      ;; do (error "extension ~S is not available" ext))
+        )	    
 
   (with-foreign-object (p-extensions-count :uint32)
     (when (zerop (glfwInit))
@@ -172,7 +178,8 @@
 					       %vk::enabledExtensionCount
 					       %vk::ppEnabledExtensionNames
 					       %vk::enabledLayerCount
-					       %vk::ppEnabledLayerNames)
+					       %vk::ppEnabledLayerNames
+                           %vk::flags)
 					      p-create-info
 					      (:struct VkInstanceCreateInfo))
 
@@ -193,6 +200,11 @@
 						%vk::enabledLayerCount 1+layer-count)
 					  (setf %vk::ppEnabledLayerNames pp-enabled-layer-names
 						%vk::enabledLayerCount layer-count)))
+                                                                         
+                    ;; Need this on recent versions of the SDK for MoltenVK to work.
+    				;; https://www.lunarg.com/wp-content/uploads/2022/04/Portability-Enumeration-Extension-APR2022.pdf
+                    #+darwin
+						(setf %vk::flags VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR)
 
 				    (vkCreateInstance p-create-info (h allocator) p-instance)))
 
